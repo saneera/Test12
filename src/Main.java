@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 class Main {
@@ -42,6 +43,10 @@ class Main {
                 startIndex++;
             }
         }
+    }
+
+    static IntStream revRange(int from, int to) {
+        return IntStream.range(from, to).map(i -> to - i + from - 1);
     }
 
     public static void main(String[] args) {
@@ -149,10 +154,14 @@ class Main {
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
         System.out.println(result.get(2));
-        System.out.println(list.stream().filter(number -> number==2 ).count());
+        System.out.println(
+                list.stream()
+                        .filter(number -> number==2 )
+                        .count());
 
         List<String> list2 = new ArrayList<>(Arrays.asList("Adam", "Bill", "Jack", "Joe", "Ian"));
-        Map<Integer, Long> result2 = list2.stream()
+        Map<Integer, Long> result2 = list2
+                .stream()
                 .collect(Collectors.groupingByConcurrent(String::length, Collectors.counting()));
 
         System.out.println(result.get(3));
@@ -161,12 +170,40 @@ class Main {
         String s = "Saneera";
 
 
-        System.out.println(s.chars().filter(ch-> ch == 'e').count());
-        System.out.println(s.chars().mapToObj(i-> (char)i).collect(Collectors.groupingBy(Object::toString, Collectors.counting())));
-        System.out.println("=========Number of occurrence==================");
+        System.out.println(s.chars()
+                .filter(ch-> ch == 'e')
+                .count());
+
+
+        System.out.println(s.chars()
+                .mapToObj(i-> (char)i)
+                .collect(Collectors.groupingBy(Object::toString, Collectors.counting())));
+        System.out.println("=========Reverse element of array==================");
+
+
+        int[] listtoreverse = {1,2,3,4,5,6,7,8};
+
+        System.out.println(revRange(0,8).toArray()) ;
 
 
 
+        List<Integer> list3 = Arrays.asList(1,2,3,4);
+        list3.stream()
+                .sorted(Collections.reverseOrder()) // Method on Stream<Integer>
+                .forEach(System.out::println);
+
+
+        LinkedList linkedList = new LinkedList();
+        linkedList.add(10);
+        linkedList.add(32);
+        linkedList.add(90);
+        linkedList.add(43);
+        linkedList.add(70);
+        linkedList.add(20);
+        linkedList.add(45);
+
+        int middle = linkedList.size()/2;
+        System.out.println(linkedList.get(middle));
 
 
     }
